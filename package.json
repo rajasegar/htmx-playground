@@ -9,5 +9,11 @@
   },
   "devDependencies": {
     "vite": "^2.9.5"
+  },
+  "dependencies": {
+    "codesandbox": "^2.2.3",
+    "immer": "^9.0.12",
+    "lodash": "^4.17.21",
+    "redux": "^4.2.0"
   }
 }

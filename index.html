@@ -4,10 +4,40 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>HTMX Playground</title>
   </head>
   <body>
-    <div id="app"></div>
+    <header>
+      <h1 class="brand">HTMX <span>Playground</span></h1>
+      <div style="display: flex; width: 90%">
+        <editor-menu></editor-menu>
+        <toggle-builder-mode></toggle-builder-mode>
+        <toggle-code-panel></toggle-code-panel>
+        <export-to-codesandbox></export-to-codesandbox>
+        <clear-editor></clear-editor>
+        <download-project></download-project>
+      </div>
+    </header>
+    <div class="container">
+      <div class="sidebar">
+        <ul>
+          <li class="drag-item" id="div" draggable="true">div</li>
+          <li class="drag-item" id="button" draggable="true">button</li>
+          <li class="drag-item" id="form" draggable="true">form</li>
+          <li class="drag-item" id="label" draggable="true">label</li>
+          <li class="drag-item" id="input" draggable="true">input</li>
+          <li class="drag-item" id="select" draggable="true">select</li>
+        </ul>
+      </div>
+      <div id="editor-wrapper">
+        <div id="editor" class="builder-mode"></div>
+        <div id="code-panel"></div>
+      </div>
+      <div class="inspector">
+        <inspector-panel id="root"></inspector-panel>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.0/split.min.js"></script>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
