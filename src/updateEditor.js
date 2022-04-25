@@ -48,5 +48,4 @@ export default function updateEditor() {
     editor.appendChild(preview);
   });
 
-    console.log(generateCode());
 }

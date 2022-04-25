@@ -1,5 +1,9 @@
 import { store } from "../store";
 import "../panels/default";
+import "../panels/div";
+import "../panels/label";
+import "../panels/button";
+import "../panels/span";
 
 import duplicateIcon from '../icons/copy.svg';
 import deleteIcon from '../icons/trash.svg';
@@ -15,46 +19,6 @@ class InspectorPanel extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     this.id = this.getAttribute("id"); // selected component id
-
-    this.addEventListener("fwClick", (ev) => {
-      const path = ev.path || (ev.composedPath && ev.composedPath());
-      const buttonId = path[0].id;
-      switch (buttonId) {
-        case "btn-copy-code":
-          // dispatch copy code message
-          break;
-
-        case "btn-duplicate":
-          // dispatch duplicate component message
-          store.dispatch({ type: "DUPLICATE_COMPONENT" });
-          break;
-
-        case "btn-reset-props":
-          // dispatch reset props message
-          store.dispatch({
-            type: "RESET_PROPS",
-            payload: {
-              componentId: this.id,
-            },
-          });
-          break;
-
-        case "btn-delete":
-          // dispatch delete component  message
-          store.dispatch({
-            type: "DELETE_COMPONENT",
-            payload: { componentId: this.id },
-          });
-          break;
-
-        case "btn-crayon-docs":
-          this._openDocs();
-          break;
-
-        default:
-          console.error("InspectorPanel: Unknown action button");
-      }
-    });
 
     this.render();
   }
@@ -92,6 +56,26 @@ class InspectorPanel extends HTMLElement {
         });
         break;
 
+      case "div":
+        panel = `<div-panel data-id="${this.id}"></div-panel>`;
+        this.renderPanel(type, panel);
+	break;
+
+      case "label":
+        panel = `<label-panel data-id="${this.id}"></label-panel>`;
+        this.renderPanel(type, panel);
+	break;
+
+      case "button":
+        panel = `<button-panel data-id="${this.id}"></button-panel>`;
+        this.renderPanel(type, panel);
+	break;
+
+      case "span":
+        panel = `<span-panel data-id="${this.id}"></span-panel>`;
+        this.renderPanel(type, panel);
+	break;
+
       default:
         panel = `<default-panel data-id="${this.id}"></default-panel>`;
         this.renderPanel(type, panel);
@@ -103,13 +87,13 @@ class InspectorPanel extends HTMLElement {
     const template = document.createElement("template");
     const actionButtons = `
     <div class="action-buttons-wrapper">
-    <button id="btn-copy-code" size="icon" title="Copy component code" color="secondary">
+    <button id="btn-copy-code"  title="Copy component code" color="secondary">
 <img src=${copyIcon} alt="Copy Code"/>
  </button>
-    <button id="btn-duplicate" size="icon" title="Duplicate" color="secondary">
+    <button id="btn-duplicate"  title="Duplicate" color="secondary">
 <img src=${duplicateIcon} alt="Duplicate Component"/>
  </button>
-    <button id="btn-reset-props" size="icon" title="Reset props" color="secondary">
+    <button id="btn-reset-props"  title="Reset props" color="secondary">
 <img src=${resetIcon} alt="Reset Props"/>
 </button>
     <button id="btn-delete" title="Delete" color="secondary">
@@ -151,6 +135,30 @@ padding: 0.25em 0.5em;
       </div>
     `;
     this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+
+      this.duplicateButton = this.shadowRoot.querySelector('#btn-duplicate');
+      this.duplicateButton && this.duplicateButton.addEventListener('click', () => {
+          store.dispatch({ type: "DUPLICATE_COMPONENT" });
+      });
+
+      this.deleteButton = this.shadowRoot.querySelector('#btn-delete');
+      this.deleteButton && this.deleteButton.addEventListener('click', () => {
+          store.dispatch({type: "DELETE_COMPONENT",});
+      });
+
+
+      this.resetPropsBtn = this.shadowRoot.querySelector('#btn-reset-props');
+      this.resetPropsBtn && this.resetPropsBtn.addEventListener('click', () => {
+
+          // dispatch reset props message
+          store.dispatch({
+            type: "RESET_PROPS",
+            payload: {
+              componentId: this.id,
+            },
+          });
+      });
   }
 }
 

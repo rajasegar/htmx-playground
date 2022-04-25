@@ -8,6 +8,26 @@ export default function generateCode() {
   return code
 }
 
+export function generateEJSCode() {
+    const body = generateCode();
+
+    const code = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>My HTMX Playground app</title>
+</head>
+<body>
+${body}
+<script src="https://unpkg.com/htmx.org@1.7.0"></script>
+</body>
+</html>
+`;
+
+    return code;
+}
+
 function generateCodeForChildren(offspring) {
   const { components } = store.getState()
   let code = ''

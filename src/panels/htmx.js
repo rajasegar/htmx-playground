@@ -1,9 +1,10 @@
+import { store } from '../store';
 import updateProps from "../updateProps";
 import "./children";
 
 import '../components/accordion';
 
-class DefaultPanel extends HTMLElement {
+class HtmxPanel extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -19,6 +20,8 @@ class DefaultPanel extends HTMLElement {
   }
 
   render() {
+      const { components } = store.getState();
+      const { props } = components[this.dataset.id];
     const template = document.createElement("template");
     template.innerHTML = `
 <style>
@@ -38,30 +41,19 @@ input, textarea {
     width: 90%;
 }
 </style>
-<hp-accordion heading="HTML Attributes" open>
-<label  for="txt-name">Name:</label>
-<input  type="text" id="txt-name" data-property="name"/>
-<label  for="txt-id">ID:</label>
-<input  type="text" id="txt-id" data-property="id"/>
-<label  for="txt-class">Class:</label>
-<input  type="text" id="txt-class" data-property="class"/>
-<label  for="txt-children">Children:</label>
-<textarea id="txt-children" data-property="children">
-</textarea>
-</hp-accordion>
 <hp-accordion heading="HTMX Attributes" open>
 <label  for="txt-hx-get">hx-get</label>
-<input  type="text" id="txt-hx-get" data-property="hx-get"/>
+<input  type="text" id="txt-hx-get" data-property="hx-get" value="${props['hx-get'] || ''}"/>
 <label  for="txt-hx-target">hx-target</label>
-<input  type="text" id="txt-hx-target" data-property="hx-target"/>
+<input  type="text" id="txt-hx-target" data-property="hx-target" value="${props['hx-target'] || ''}"/>
 <label  for="txt-hx-indicator">hx-indicator</label>
-<input  type="text" id="txt-hx-indicator" data-property="hx-indicator"/>
+<input  type="text" id="txt-hx-indicator" data-property="hx-indicator" value="${props['hx-indicator'] || ''}"/>
 <label  for="txt-hx-swap">hx-swap</label>
-<input  type="text" id="txt-hx-swap" data-property="hx-swap"/>
+<input  type="text" id="txt-hx-swap" data-property="hx-swap" value="${props['hx-swap'] || ''}"/>
 </hp-accordion>
 <children-panel data-id="${this.dataset.id}"></children-panel>`;
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 }
 
-window.customElements.define("default-panel", DefaultPanel);
+window.customElements.define("htmx-panel", HtmxPanel);

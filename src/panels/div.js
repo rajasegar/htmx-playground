@@ -1,9 +1,12 @@
+import { store } from '../store';
 import updateProps from "../updateProps";
+
+
 import "./children";
-
 import '../components/accordion';
+import './htmx';
 
-class DefaultPanel extends HTMLElement {
+class DivPanel extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -19,6 +22,8 @@ class DefaultPanel extends HTMLElement {
   }
 
   render() {
+      const { components } = store.getState();
+      const { props } = components[this.dataset.id];
     const template = document.createElement("template");
     template.innerHTML = `
 <style>
@@ -39,29 +44,15 @@ input, textarea {
 }
 </style>
 <hp-accordion heading="HTML Attributes" open>
-<label  for="txt-name">Name:</label>
-<input  type="text" id="txt-name" data-property="name"/>
 <label  for="txt-id">ID:</label>
-<input  type="text" id="txt-id" data-property="id"/>
+<input  type="text" id="txt-id" data-property="id" value="${props.id || ''}"/>
 <label  for="txt-class">Class:</label>
-<input  type="text" id="txt-class" data-property="class"/>
-<label  for="txt-children">Children:</label>
-<textarea id="txt-children" data-property="children">
-</textarea>
+<input  type="text" id="txt-class" data-property="class" value="${props.class || ''}"/>
 </hp-accordion>
-<hp-accordion heading="HTMX Attributes" open>
-<label  for="txt-hx-get">hx-get</label>
-<input  type="text" id="txt-hx-get" data-property="hx-get"/>
-<label  for="txt-hx-target">hx-target</label>
-<input  type="text" id="txt-hx-target" data-property="hx-target"/>
-<label  for="txt-hx-indicator">hx-indicator</label>
-<input  type="text" id="txt-hx-indicator" data-property="hx-indicator"/>
-<label  for="txt-hx-swap">hx-swap</label>
-<input  type="text" id="txt-hx-swap" data-property="hx-swap"/>
-</hp-accordion>
+<htmx-panel data-id="${this.dataset.id}"/>
 <children-panel data-id="${this.dataset.id}"></children-panel>`;
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 }
 
-window.customElements.define("default-panel", DefaultPanel);
+window.customElements.define("div-panel", DivPanel);

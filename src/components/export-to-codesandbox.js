@@ -1,58 +1,20 @@
 import { getParameters } from 'codesandbox/lib/api/define';
+import { generateEJSCode } from '../generateCode';
+import getExpressCode from '../getExpressCode';
 
-const template = document.createElement('template');
-const parameters = getParameters({
-  files: {
-    'src/index.js': {
-      content: `
-const express = require('express')
-const app = express()
-const port = 3000
-app.set('view engine', 'pug')
-app.get('/', (req, res) => {
-    res.render('index', { title: 'Hey', message: 'Hello there!' })
-})
-app.listen(port, () => {
-  console.log(\`Example app listening on port \${port}\`)
-})
-`,
-    },
-      'views/index.pug': {
-	  content: `
-html
-  head
-    title= title
-  body
-    h1= message
-`
-      },
-		'package.json': {
-			content: {
-				"name": "express-starter",
-				"version": "1.0.0",
-				"description": "Get started using Express.js with this basic template.",
-				"main": "src/index.js",
-				"scripts": {
-					"start": "node src/start.js",
-					"dev": "nodemon src/start.js",
-					"test": "tap --no-coverage  --no-esm"
-				},
-				dependencies: {
-					'express': '^4.17.3',
-					'pug': '^3.0.2'
-				},
-			    "devDependencies": {
-    "tap": "^14.10.2",
-    "nodemon": "^2.0.1"
-  },
-			},
-		},
-	},
-});
+class ExportToCodeSandbox extends HTMLElement {
+	constructor() {
+		super();
+		this.render();
+	}
 
-	const url = `https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`;
-	
-template.innerHTML = `
+
+
+	render() {
+		const template = document.createElement('template');
+		const url = this.getSandboxUrl();
+
+		template.innerHTML = `
 <style>
 .container { 
 padding: 0 1em;
@@ -75,12 +37,74 @@ CodeSandbox <fw-icon name="open-new-tab"></fw-icon>
 </div>
 `;
 
-class ExportToCodeSandbox extends HTMLElement {
-  constructor() {
-      super();
-      this.attachShadow({ mode: 'open' });
-      this.shadowRoot.appendChild(template.content.cloneNode(true));
-  }
+		this.attachShadow({ mode: 'open' });
+		this.shadowRoot.appendChild(template.content.cloneNode(true));
+		const btn$ = this.shadowRoot.querySelector('#btn-export')
+		btn$.addEventListener('click', () => {
+			const url = this.getSandboxUrl();
+			const form$ = this.shadowRoot.querySelector('form')
+			form$.setAttribute('action', url)
+			return true
+		})
+	}
+
+	getSandboxUrl() {
+		const parameters = getParameters({
+			files: {
+				'src/index.js': {
+				    content: getExpressCode(),
+				},
+				'views/index.ejs': {
+					content: generateEJSCode()
+				},
+				'views/editcontact.ejs': {
+					content: `
+<form hx-put="/contact/1" hx-target="this" hx-swap="outerHTML">
+  <div>
+    <label>First Name</label>
+    <input type="text" name="firstName" value="Joe">
+  </div>
+  <div class="form-group">
+    <label>Last Name</label>
+    <input type="text" name="lastName" value="Blow">
+  </div>
+  <div class="form-group">
+    <label>Email Address</label>
+    <input type="email" name="email" value="joe@blow.com">
+  </div>
+  <button class="btn">Submit</button>
+  <button class="btn" hx-get="/contact/1">Cancel</button>
+</form> 
+`,
+				},
+				'package.json': {
+					content: {
+						"name": "htmx-express-demo",
+						"version": "1.0.0",
+						"description": "Get started using HTMX with Express.js.",
+						"main": "src/index.js",
+						"scripts": {
+							"start": "node src/start.js",
+							"dev": "nodemon src/start.js",
+							"test": "tap --no-coverage  --no-esm"
+						},
+						dependencies: {
+							'express': '^4.17.3',
+							'ejs': '^3.1.7'
+						},
+						"devDependencies": {
+							"tap": "^14.10.2",
+							"nodemon": "^2.0.1"
+						},
+					},
+				},
+			},
+		});
+
+		const url = `https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`;
+		return url;
+
+	}
 }
 
 window.customElements.define('export-to-codesandbox', ExportToCodeSandbox);

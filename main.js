@@ -8,7 +8,6 @@ import './src/components/clear-editor'
 import './src/components/editor-menu'
 import './src/components/download-project'
 import './src/components/export-to-codesandbox';
-import './src/components/sidebar';
 
 ;(function () {
   const editor = document.getElementById('editor')

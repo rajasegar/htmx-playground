@@ -1,17 +1,21 @@
 lockfileVersion: 5.3
 
 specifiers:
+  browser-nativefs: ^0.12.0
   codesandbox: ^2.2.3
   immer: ^9.0.12
   lodash: ^4.17.21
   redux: ^4.2.0
+  sortablejs: ^1.15.0
   vite: ^2.9.5
 
 dependencies:
+  browser-nativefs: 0.12.0
   codesandbox: 2.2.3
   immer: 9.0.12
   lodash: 4.17.21
   redux: 4.2.0
+  sortablejs: 1.15.0
 
 devDependencies:
   vite: 2.9.5
@@ -117,6 +121,11 @@ packages:
     dependencies:
       balanced-match: 1.0.2
       concat-map: 0.0.1
+    dev: false
+
+  /browser-nativefs/0.12.0:
+    resolution: {integrity: sha512-ZCHJcQI6bBm9YjB+6wMT1nWg+/mnWnz7r3gJ8sx7RjgLtWROFq+BuD12cAncD6y45MIbUqFM8eMKXoHXOxSFxA==}
+    deprecated: Renamed to browser-fs-access
     dev: false
 
   /buffer-alloc-unsafe/1.1.0:
@@ -1712,6 +1721,10 @@ packages:
     dependencies:
       ip: 1.1.5
       smart-buffer: 1.1.15
+    dev: false
+
+  /sortablejs/1.15.0:
+    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
     dev: false
 
   /source-map-js/1.0.2:

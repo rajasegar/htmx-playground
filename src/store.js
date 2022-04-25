@@ -91,18 +91,15 @@ function appReducer(state = initialState, { type, payload }) {
       });
 
     case "DELETE_COMPONENT":
-      if (payload.componentId === "root") {
-        return state;
-      }
 
       return produce(state, (draftState) => {
-        const component = draftState.components[payload.componentId];
+        const component = draftState.components[draftState.selectedId];
 
         // Remove self
         if (component && component.parent) {
           const children = draftState.components[
             component.parent
-          ].children.filter((id) => id !== payload.componentId);
+          ].children.filter((id) => id !== draftState.selectedId);
 
           draftState.components[component.parent].children = children;
         }

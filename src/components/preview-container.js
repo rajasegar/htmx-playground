@@ -31,6 +31,7 @@ class PreviewContainer extends HTMLElement {
         type: "SELECT_COMPONENT",
         payload: { selectedId: this.getAttribute("id") },
       });
+	div$.style.border = '1px solid var(--elephant)'
     };
     div$.addEventListener("drop", (ev) => {
       ev.preventDefault();
