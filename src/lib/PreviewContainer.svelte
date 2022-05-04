@@ -1,5 +1,6 @@
 <script>
- import { editor } from '../stores.js';
+ import { element } from 'svelte/internal';
+import { editor } from '../stores.js';
 
  export let id;
  export let name;
@@ -76,7 +77,13 @@
 						<svelte:self id={child} name={childComponent.type}/>
 				{/each}
 		{:else}
-				<svelte:element this={component.type}></svelte:element>
+				{#if component.props.children}
+				<svelte:element this={component.type}>
+						{component.props.children}
+				</svelte:element>
+				{:else}
+				<svelte:element this={component.type} />
+				{/if}
 		{/if}
 
 </div>
@@ -90,7 +97,7 @@
  }
 
  .preview-wrapper:hover {
-		 border: 1px solid var(--elephant);
+		 border: 1px solid blue;
  }
  .active, .active:hover {
 		 border: 2px solid var(--elephant);

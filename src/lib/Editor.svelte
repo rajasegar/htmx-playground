@@ -1,10 +1,19 @@
 <script>
 
- import { children, element } from 'svelte/internal';
 import { editor } from '../stores.js';
 import PreviewContainer from './PreviewContainer.svelte';
+ import PrismContainer from './PrismContainer.svelte';
+ import generateCode from '../generateCode';
 
 
+ let showCode = false;
+
+ editor.subscribe(value => {
+		 showCode = value.showCode;
+ });
+
+
+ 
  const htmlTags = [
 		 'div','p','span','a','button','form','label',
 		 'input','textarea','select','fieldset','header',
@@ -14,66 +23,39 @@ import PreviewContainer from './PreviewContainer.svelte';
 
  let drop_zone;
  
- let dropped = [];
- let status = '';
- 
- let dropped_in = '';
  let activeEvent = '';
  let originalX = '';
  let originalY = '';
  
-function handleDragEnter(e) {
-        status = "You are dragging over the " + e
-            .target
-            .getAttribute('id');
-    }
+function handleDragEnter(e) {}
 
-    function handleDragLeave(e) {
-        status = "You left the " + e
-            .target
-            .getAttribute('id');
-    }
+    function handleDragLeave(e) {}
 
     function handleDragDrop(e) {
         e.preventDefault();
         var element_id = e
             .dataTransfer
             .getData("text");
-				dropped = dropped.concat(element_id);
-        dropped_in = true;
-        status = "You droped " + element_id + " into drop zone";
-				console.log(status);
 
-				const payload = {}
-				payload.type = element_id
-				payload.parentName = 'root'
-				payload.rootParentType = 'root'
-
+				const payload = {
+						type: element_id,
+						parentName: 'root',
+						rootParentType: 'root',
+				};
+				
 				editor.add(payload);
     }
 
  function handleDragStart(e) {
-     status = "Dragging the element " + e
-         .target
-         .getAttribute('id');
      e.dataTransfer.dropEffect = "move";
      e.dataTransfer
       .setData("text", e.target.getAttribute('id'));
  }
 
  function handleDragEnd(e) {
-     if (dropped_in == false) {
-      	 status = "You let the " + e
-        		 .target
-						 .getAttribute('id') + " go.";
-     }
-     dropped_in = false;
  }
 
  function handleTouchStart(e) {
-     status = "Touch start with element " + e
-      	 .target
-         .getAttribute('id');
      originalX = (e.target.offsetLeft - 10) + "px";
      originalY = (e.target.offsetTop - 10) + "px";
      activeEvent = 'start';
@@ -83,7 +65,6 @@ function handleDragEnter(e) {
      let touchLocation = e.targetTouches[0];
      let pageX = Math.floor((touchLocation.pageX - 50)) + "px";
      let pageY = Math.floor((touchLocation.pageY - 50)) + "px";
-     status = "Touch x " + pageX + " Touch y " + pageY;
      e.target.style.position = "absolute";
      e.target.style.left = pageX;
      e.target.style.top = pageY;
@@ -160,7 +141,11 @@ function handleDragEnter(e) {
 							<PreviewContainer id={component.id} name={component.type}/>
 							{/each}
 			</div>
-    <div id="code-panel"></div>
+					<div id="code-panel">
+			{#if showCode}
+					<PrismContainer />
+		{/if}
+					</div>
   </div>
   <style>
 	 .sidebar {
@@ -206,6 +191,11 @@ function handleDragEnter(e) {
 			 background-image: linear-gradient(to right, rgb(217, 226, 233) 1px, transparent 1px), linear-gradient(rgb(217, 226, 233) 1px, transparent 1px);
 			 background-size: 20px 20px;
 			 background-color: rgb(237, 242, 246);
+	 }
+
+
+	 pre {
+			 padding: 0.25em;
 	 }
 
 

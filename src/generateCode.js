@@ -1,20 +1,39 @@
-import { editor } from './stores.js';
+import { editor } from "./stores.js";
 
 let components;
 
-editor.subscribe(value => {
-	components = value.components;
+editor.subscribe((value) => {
+  components = value.components;
 });
 
-export default function generateCode() {
-	const code = generateCodeForChildren(components.root.children);
-	return code;
+export const formatCode = async (code) => {
+  let formattedCode = `// 🚨 Your props contains invalid code`;
+
+  const prettier = await import("prettier/standalone");
+  const htmlParser = await import("prettier/parser-html");
+
+  try {
+    formattedCode = prettier.format(code, {
+      parser: "html",
+      plugins: [htmlParser],
+    });
+  } catch (e) {
+    console.log(e);
+  }
+
+  return formattedCode;
+};
+
+export default async function generateCode() {
+  const code = generateCodeForChildren(components.root.children);
+  const formattedCode = await formatCode(code);
+  return formattedCode;
 }
 
 export function generateEJSCode() {
-	const body = generateCode();
+  const body = generateCode();
 
-	const code = `
+  const code = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,98 +47,98 @@ ${body}
 </html>
 `;
 
-	return code;
+  return code;
 }
 
 function generateCodeForChildren(offspring) {
-	let code = ''
-	offspring.forEach((id) => {
-		const { type, props, children } = components[id]
+  let code = "";
+  offspring.forEach((id) => {
+    const { type, props, children } = components[id];
 
-		switch (type) {
-			case 'fw-button':
-				code += generateButtonCode(props)
-				break
+    switch (type) {
+      case "fw-button":
+        code += generateButtonCode(props);
+        break;
 
-			default:
-				code += generateDefaultCode(type, props, children)
-		}
-	})
-	return code
+      default:
+        code += generateDefaultCode(type, props, children);
+    }
+  });
+  return code;
 }
 
 function generateDefaultCode(type, props, children) {
-	let code = ''
+  let code = "";
 
-	const properties = Object.keys(props)
-		.filter((p) => !['children', 'options'].includes(p))
-		.map((p) => `${p}="${props[p]}"`)
-		.join('\n')
+  const properties = Object.keys(props)
+    .filter((p) => !["children", "options"].includes(p))
+    .map((p) => `${p}="${props[p]}"`)
+    .join("\n");
 
-	if (props.children) {
-		code += `<${type} ${properties}>${props.children}</${type}>\n`
-	} else if (children.length > 0) {
-		const _children = generateCodeForChildren(children)
-		code += `<${type} ${properties}>\r\n${_children}</${type}>\n`
-	} else if (props.options) {
-		const _children = generateChildrenFromOptions(type, props.options)
-		code += `<${type} ${properties}>\r\n${_children}</${type}>\n`
-	} else {
-		code += `<${type} ${properties}></${type}>\n`
-	}
+  if (props.children) {
+    code += `<${type} ${properties}>${props.children}</${type}>\n`;
+  } else if (children.length > 0) {
+    const _children = generateCodeForChildren(children);
+    code += `<${type} ${properties}>\r\n${_children}</${type}>\n`;
+  } else if (props.options) {
+    const _children = generateChildrenFromOptions(type, props.options);
+    code += `<${type} ${properties}>\r\n${_children}</${type}>\n`;
+  } else {
+    code += `<${type} ${properties}></${type}>\n`;
+  }
 
-	return code
+  return code;
 }
 
 function generateButtonCode(props) {
-	let code = ''
+  let code = "";
 
-	const properties = Object.keys(props)
-		.filter((p) => !['children', 'icon'].includes(p))
-		.map((p) => `${p}="${props[p]}"`)
-		.join(' \r\n')
+  const properties = Object.keys(props)
+    .filter((p) => !["children", "icon"].includes(p))
+    .map((p) => `${p}="${props[p]}"`)
+    .join(" \r\n");
 
-	if (props.size && props.size === 'icon') {
-		code += `<fw-button ${properties}><fw-icon name="${props.icon}"></fw-icon></fw-button>`
-	} else {
-		code += `<fw-button ${properties}>${props.children}</fw-button>\n`
-	}
+  if (props.size && props.size === "icon") {
+    code += `<fw-button ${properties}><fw-icon name="${props.icon}"></fw-icon></fw-button>`;
+  } else {
+    code += `<fw-button ${properties}>${props.children}</fw-button>\n`;
+  }
 
-	return code
+  return code;
 }
 
 function generateChildrenFromOptions(type, options) {
-	let opts = ''
-	switch (type) {
-		case 'fw-select':
-			opts = generateOptionsForSelect(options)
-			break
+  let opts = "";
+  switch (type) {
+    case "fw-select":
+      opts = generateOptionsForSelect(options);
+      break;
 
-		case 'fw-dropdown-button':
-			opts = generateOptionsForDropdownButton(options)
-			break
+    case "fw-dropdown-button":
+      opts = generateOptionsForDropdownButton(options);
+      break;
 
-		default:
-			console.error('Unknown component with options props')
-	}
-	return opts
+    default:
+      console.error("Unknown component with options props");
+  }
+  return opts;
 }
 
 function generateOptionsForDropdownButton(options) {
-	const opts = options
-		.map((option) => {
-			return `  <option id="${option.id}" value="${option.value}">${option.label}</option>`
-		})
-		.join('\n')
+  const opts = options
+    .map((option) => {
+      return `  <option id="${option.id}" value="${option.value}">${option.label}</option>`;
+    })
+    .join("\n");
 
-	const wrapper = `<div slot="dropdown-options">${opts}</div>`
-	return wrapper
+  const wrapper = `<div slot="dropdown-options">${opts}</div>`;
+  return wrapper;
 }
 
 function generateOptionsForSelect(options) {
-	return options
-		.map((option) => {
-			return `  <fw-select-option value="${option.value}">${option.label}</fw-select-option>`
-		})
-		.join('\n')
+  return options
+    .map((option) => {
+      return `  <fw-select-option value="${option.value}">${option.label}</fw-select-option>`;
+    })
+    .join("\n");
 }

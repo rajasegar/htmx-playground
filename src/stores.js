@@ -96,6 +96,22 @@ function createEditor() {
           draftState.components
         );
       });
+			}),
+
+			updateProps: (payload) => update((state) => {
+					return produce(state, (draftState) => {
+						const component = draftState.components[draftState.selectedId];
+							component.props = {
+									...component.props,
+									...payload,
+							};
+					});
+			}),
+
+			toggleCode: () => update((state) => {
+					return produce(state, (draftState) => {
+							draftState.showCode = !draftState.showCode;
+					});
 			})
 
 	};

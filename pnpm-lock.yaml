@@ -6,6 +6,8 @@ specifiers:
   codesandbox: ^2.2.3
   immer: ^9.0.12
   lodash: ^4.17.21
+  prettier: ^2.6.2
+  prismjs: ^1.28.0
   sortablejs: ^1.15.0
   svelte: ^3.47.0
   vite: ^2.9.5
@@ -16,6 +18,8 @@ dependencies:
   codesandbox: 2.2.3
   immer: 9.0.12
   lodash: 4.17.21
+  prettier: 2.6.2
+  prismjs: 1.28.0
   sortablejs: 1.15.0
   svelte: 3.47.0
 
@@ -1536,6 +1540,17 @@ packages:
   /prepend-http/1.0.4:
     resolution: {integrity: sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw=}
     engines: {node: '>=0.10.0'}
+    dev: false
+
+  /prettier/2.6.2:
+    resolution: {integrity: sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    dev: false
+
+  /prismjs/1.28.0:
+    resolution: {integrity: sha512-8aaXdYvl1F7iC7Xm1spqSaY/OJBpYW3v+KJ+F17iYxvdc8sfjW194COK5wVhMZX45tGteiBQgdvD/nhxcRwylw==}
+    engines: {node: '>=6'}
     dev: false
 
   /process-nextick-args/2.0.1:

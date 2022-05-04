@@ -3,8 +3,17 @@
  import ChildrenPanel from "./ChildrenPanel.svelte"; 
  import Accordion from "../lib/Accordion.svelte"; 
  import ActionsPanel from "../lib/ActionsPanel.svelte"; 
+
+ import updateProps from "../updateProps"; 
+
  export let id;
  export let props;
+
+ let children = props.children || 'MyLabel:';
+
+ function updateChildrenProps() {
+		 updateProps({ children });
+ }
 </script>
 
 <ActionsPanel id={id} />
@@ -13,6 +22,8 @@
 <input  type="text" id="txt-id" data-property="id" value=""/>
 <label  for="txt-class">Class:</label>
 <input  type="text" id="txt-class" data-property="class" value=""/>
+<label  for="txt-children">Children:</label>
+<textarea id="txt-children" data-property="children" bind:value={children} on:input={updateChildrenProps} />
 </Accordion>
 <HtmxPanel id={id}/>
 <ChildrenPanel id={id}/>
