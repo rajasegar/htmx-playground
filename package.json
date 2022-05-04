@@ -16,7 +16,6 @@
     "codesandbox": "^2.2.3",
     "immer": "^9.0.12",
     "lodash": "^4.17.21",
-    "redux": "^4.2.0",
     "sortablejs": "^1.15.0",
     "svelte": "^3.47.0"
   }

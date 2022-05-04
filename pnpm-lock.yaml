@@ -6,7 +6,6 @@ specifiers:
   codesandbox: ^2.2.3
   immer: ^9.0.12
   lodash: ^4.17.21
-  redux: ^4.2.0
   sortablejs: ^1.15.0
   svelte: ^3.47.0
   vite: ^2.9.5
@@ -17,7 +16,6 @@ dependencies:
   codesandbox: 2.2.3
   immer: 9.0.12
   lodash: 4.17.21
-  redux: 4.2.0
   sortablejs: 1.15.0
   svelte: 3.47.0
 
@@ -25,13 +23,6 @@ devDependencies:
   vite: 2.9.5
 
 packages:
-
-  /@babel/runtime/7.17.9:
-    resolution: {integrity: sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: 0.13.9
-    dev: false
 
   /@rollup/pluginutils/4.2.1:
     resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
@@ -1621,16 +1612,6 @@ packages:
       safe-buffer: 5.1.2
       string_decoder: 1.1.1
       util-deprecate: 1.0.2
-    dev: false
-
-  /redux/4.2.0:
-    resolution: {integrity: sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==}
-    dependencies:
-      '@babel/runtime': 7.17.9
-    dev: false
-
-  /regenerator-runtime/0.13.9:
-    resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
     dev: false
 
   /registry-auth-token/3.4.0:
