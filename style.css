@@ -109,15 +109,7 @@ background-color: rgb(237, 242, 246);
   padding-right: 0.5em;
 }
 
-.preview-wrapper {
-  margin: 0.25em;
-  padding: 0.5em;
-  border: 1px dashed black;
-}
 
-.preview-wrapper:hover {
-  border: 1px solid var(--elephant);
-}
 
 .preview-wrapper > fw-modal {
   padding: 1em;

@@ -1,54 +1,10 @@
+<script>
+
 import { getParameters } from 'codesandbox/lib/api/define';
 import { generateEJSCode } from '../generateCode';
 import getExpressCode from '../getExpressCode';
 
-class ExportToCodeSandbox extends HTMLElement {
-	constructor() {
-		super();
-		this.render();
-	}
-
-
-
-	render() {
-		const template = document.createElement('template');
-		const url = this.getSandboxUrl();
-
-		template.innerHTML = `
-<style>
-.container { 
-padding: 0 1em;
-}
-textarea { display: none; }
-button {
-background: transparent;
-color: white;
-border: none;
-cursor: pointer;
-font-size: .85em;
-}
-</style>
-<div class="container">
-<form method="post" action="${url}" target="check">
-<button id="btn-export" type="submit" title="Export to CodeSandbox">
-CodeSandbox <fw-icon name="open-new-tab"></fw-icon>
-</button>
-</form>
-</div>
-`;
-
-		this.attachShadow({ mode: 'open' });
-		this.shadowRoot.appendChild(template.content.cloneNode(true));
-		const btn$ = this.shadowRoot.querySelector('#btn-export')
-		btn$.addEventListener('click', () => {
-			const url = this.getSandboxUrl();
-			const form$ = this.shadowRoot.querySelector('form')
-			form$.setAttribute('action', url)
-			return true
-		})
-	}
-
-	getSandboxUrl() {
+	function getSandboxUrl() {
 		const parameters = getParameters({
 			files: {
 				'src/index.js': {
@@ -105,6 +61,32 @@ CodeSandbox <fw-icon name="open-new-tab"></fw-icon>
 		return url;
 
 	}
-}
 
-window.customElements.define('export-to-codesandbox', ExportToCodeSandbox);
+ let url;
+ function handleSubmit() {
+		 	url = getSandboxUrl();
+			return true
+ }
+
+
+</script>
+<div class="container">
+<form method="post" action={url} target="check">
+<button id="btn-export" type="submit" title="Export to CodeSandbox" on:click={handleSubmit}>
+CodeSandbox <fw-icon name="open-new-tab"></fw-icon>
+</button>
+</form>
+</div>
+<style>
+.container { 
+padding: 0 1em;
+}
+textarea { display: none; }
+button {
+background: transparent;
+color: white;
+border: none;
+cursor: pointer;
+font-size: .85em;
+}
+</style>
