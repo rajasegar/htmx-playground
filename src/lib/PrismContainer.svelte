@@ -1,9 +1,15 @@
 <script>
  import Prism from 'prismjs';
+ import { editor } from '../stores.js';
 
  import generateCode from '../generateCode';
 
- let codePromise = generateCode();
+ let codePromise;
+
+ editor.subscribe(() => {
+		codePromise = generateCode();
+ });
+
  let language = 'html';
 
  let label = "Copy Code";

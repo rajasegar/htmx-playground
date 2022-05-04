@@ -3,15 +3,12 @@
 import { editor } from '../stores.js';
 import PreviewContainer from './PreviewContainer.svelte';
  import PrismContainer from './PrismContainer.svelte';
- import generateCode from '../generateCode';
-
 
  let showCode = false;
 
  editor.subscribe(value => {
 		 showCode = value.showCode;
  });
-
 
  
  const htmlTags = [

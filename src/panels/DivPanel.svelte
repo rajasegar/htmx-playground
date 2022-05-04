@@ -14,7 +14,7 @@
 <label  for="txt-class">Class:</label>
 <input  type="text" id="txt-class" data-property="class" value=""/>
 </Accordion>
-<HtmxPanel id={id}/>
+<HtmxPanel id={id} props={props} />
 <ChildrenPanel id={id}/>
 
 <style>
