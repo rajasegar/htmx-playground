@@ -17,15 +17,10 @@
  let panel; // Respective element panels
 
 
- function formatLabel(name, props) {
-		 return `${name}${props.id ? '#' + props.id : ''}${props.class ? '.' + props.class.split(' ').join('.') : ''}`
- }
- let label = formatLabel(name, props);
 
  editor.subscribe(value => {
 		 name = value.components[value.selectedId].type
 		 props = value.components[value.selectedId].props;
-     label = formatLabel(name, props);
 
 		 switch(name) {
 				 case 'root':
@@ -65,9 +60,8 @@
  })
 
 </script>
-<div class="inspector" id="inspector">
-		<!-- <h3>{$editor.components[$editor.selectedId].type}</h3> -->
-		<h3>{label}</h3>
+<div id="inspector">
+		<h3>{$editor.components[$editor.selectedId].type}</h3>
 		
 <svelte:component this={mainpanel} props={props} id={id} >
 		<svelte:component this={panel} props={props} id={id}/>
@@ -79,7 +73,7 @@
 .action-buttons-wrapper {
 		padding: 0.5em;
 }
-.inspector {
+#inspector {
 		background-color: var(--smoke);
 		border-left: 1px solid var(--elephant);
 		height: 100%;

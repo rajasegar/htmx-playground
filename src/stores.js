@@ -53,12 +53,7 @@ function createEditor() {
         });
       }),
     reset: () => set(initialState),
-    importFromJson: (payload) =>
-      update((state) => {
-        return produce(state, (draftState) => {
-          draftState.components = payload;
-        });
-      }),
+    importFromJson: (payload) => set(payload),
     duplicate: () =>
       update((state) => {
         return produce(state, (draftState) => {
@@ -125,7 +120,7 @@ function createEditor() {
 
     exportJson: () =>
       update((state) => {
-        saveAsJSON(state.components);
+        saveAsJSON(state);
         return state;
       }),
   };

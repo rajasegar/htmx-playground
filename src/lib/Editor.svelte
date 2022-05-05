@@ -31,6 +31,7 @@ function handleDragEnter(e) {}
 
     function handleDragDrop(e) {
         e.preventDefault();
+				e.stopPropagation();
         var element_id = e
             .dataTransfer
             .getData("text");

@@ -1,38 +1,40 @@
-import { fileOpen, fileSave } from 'browser-nativefs'
+import { fileOpen, fileSave } from "browser-nativefs";
 
 export async function loadFromJSON() {
   const blob = await fileOpen({
-    extensions: ['.json'],
-    mimeTypes: ['application/json'],
-  })
+    extensions: [".json"],
+    mimeTypes: ["application/json"],
+  });
 
   const contents = await new Promise((resolve) => {
-    const reader = new FileReader()
-    reader.readAsText(blob, 'utf8')
+    const reader = new FileReader();
+    reader.readAsText(blob, "utf8");
     reader.onloadend = () => {
       if (reader.readyState === FileReader.DONE) {
-        resolve(reader.result)
+        resolve(reader.result);
       }
-    }
-  })
+    };
+  });
 
   try {
-    return JSON.parse(contents)
+    return JSON.parse(contents);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 export async function saveAsJSON(components) {
-  const serialized = JSON.stringify(components)
-  const name = `components.json`
+  const serialized = JSON.stringify(components);
+  const name = prompt("Please enter a file name (without extension)");
 
-  await fileSave(
-    new Blob([serialized], { type: 'application/json' }),
-    {
-      fileName: name,
-      description: 'Crayons Playground file',
-    },
-    window.handle
-  )
+  if (name) {
+    await fileSave(
+      new Blob([serialized], { type: "application/json" }),
+      {
+        fileName: `${name}.json`,
+        description: "Crayons Playground file",
+      },
+      window.handle
+    );
+  }
 }

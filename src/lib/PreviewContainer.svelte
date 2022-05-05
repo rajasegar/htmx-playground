@@ -7,13 +7,13 @@ import { editor } from '../stores.js';
  export let props;
 
  let component;
- let active = false;
+ let active;
 
- const unsubscribe = editor.subscribe(value => {
+ editor.subscribe(value => {
 		 component = value.components[id];
 		 active = id === value.selectedId;
- });
- 
+ })
+
  function selectComponent(ev) {
 		 ev.stopPropagation();
 		 editor.select(id)
@@ -74,10 +74,12 @@ import { editor } from '../stores.js';
 		<div class="annotation">{name}</div>
 
 		{#if component.children.length > 0}
+				<svelte:element this={component.type} {...props}>
 				{#each component.children as child}
 						{@const childComponent = $editor.components[child]}
-						<svelte:self id={child} name={childComponent.type} {...props}/>
+								<svelte:self id={child} name={childComponent.type} {...props}/>
 				{/each}
+				</svelte:element>
 		{:else}
 				{#if component.props.children}
 				<svelte:element this={component.type} {...props}>

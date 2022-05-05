@@ -8,12 +8,16 @@
  editor.subscribe(value => {
 		 children = value.components[value.selectedId].children;
  })
+
+ function selectComponent(id) {
+		 editor.select(id);
+ }
  
 </script>
 <Accordion heading="Children" open>
 <ul id="children">
 		{#each children as child}
-        <li data-id={child}><span class="icon">&#8597</span>{$editor.components[child].type}</li>
+        <li data-id={child} on:click={() => selectComponent(child)}><span class="icon">&#8597</span>{$editor.components[child].type}</li>
 		{/each}
 </ul>
 </Accordion>
@@ -26,7 +30,7 @@ padding: 0;
 list-style: none;
 padding: .5em;
 border-bottom: 1px solid #ddd;
-cursor: move;
+cursor: pointer;
 }
 #children li:hover {
 background: lightyellow;
