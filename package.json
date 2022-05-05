@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "rollup-plugin-svelte-svg": "^1.0.0-beta.6",
     "vite": "^2.9.5"
   },
   "dependencies": {

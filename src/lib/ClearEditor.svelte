@@ -7,7 +7,7 @@
 </script>
 
 <div>
-		<button on:click={clearEditor}>Clear Editor</button>
+		<button on:click={clearEditor}>&times; Clear Editor</button>
 </div>
 
 <style>

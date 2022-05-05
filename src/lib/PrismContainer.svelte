@@ -1,14 +1,9 @@
 <script>
  import Prism from 'prismjs';
- import { editor } from '../stores.js';
 
  import generateCode from '../generateCode';
 
- let codePromise;
-
- editor.subscribe(() => {
-		codePromise = generateCode();
- });
+ let codePromise = generateCode();
 
  let language = 'html';
 
@@ -58,5 +53,6 @@
 		 background: var(--elephant);
 		 border: none;
 		 border-radius: 4px;
+		 cursor:pointer;
  }
 </style>

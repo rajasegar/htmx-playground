@@ -4,6 +4,7 @@ import { editor } from '../stores.js';
 
  export let id;
  export let name;
+ export let props;
 
  let component;
  let active = false;
@@ -70,19 +71,20 @@ import { editor } from '../stores.js';
 					 on:mouseleave={handleMouseLeave}
 
 >
+		<div class="annotation">{name}</div>
 
 		{#if component.children.length > 0}
 				{#each component.children as child}
 						{@const childComponent = $editor.components[child]}
-						<svelte:self id={child} name={childComponent.type}/>
+						<svelte:self id={child} name={childComponent.type} {...props}/>
 				{/each}
 		{:else}
 				{#if component.props.children}
-				<svelte:element this={component.type}>
+				<svelte:element this={component.type} {...props}>
 						{component.props.children}
 				</svelte:element>
 				{:else}
-				<svelte:element this={component.type} />
+				<svelte:element this={component.type} {...props} />
 				{/if}
 		{/if}
 
@@ -94,6 +96,7 @@ import { editor } from '../stores.js';
 		 padding: 1em;
 		 border: 1px dashed black;
 		 min-height: 1em;
+		 position: relative;
  }
 
  .preview-wrapper:hover {
@@ -101,5 +104,16 @@ import { editor } from '../stores.js';
  }
  .active, .active:hover {
 		 border: 2px solid var(--elephant);
+ }
+
+ .annotation {
+		 position: absolute;
+		 background: var(--elephant);
+		 color: white;
+		 padding: 0.25em 0.5em;
+		 font-size: .7em;
+		 right: 0;
+		 top:0;
+		 border-bottom-left-radius: 4px;
  }
 </style>

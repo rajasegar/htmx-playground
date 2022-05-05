@@ -3,6 +3,7 @@
 import { getParameters } from 'codesandbox/lib/api/define';
 import { generateEJSCode } from '../generateCode';
 import getExpressCode from '../getExpressCode';
+ import Icon from '../icons/box-arrow-up-right.svg';
 
 	function getSandboxUrl() {
 		const parameters = getParameters({
@@ -73,7 +74,7 @@ import getExpressCode from '../getExpressCode';
 <div class="container">
 <form method="post" action={url} target="check">
 <button id="btn-export" type="submit" title="Export to CodeSandbox" on:click={handleSubmit}>
-CodeSandbox <fw-icon name="open-new-tab"></fw-icon>
+CodeSandbox <Icon/>
 </button>
 </form>
 </div>

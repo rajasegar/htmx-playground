@@ -1,10 +1,10 @@
 <script>
  import { editor } from '../stores.js';
  
-import duplicateIcon from '../icons/copy.svg';
-import deleteIcon from '../icons/trash.svg';
-import copyIcon from '../icons/code.svg';
-import resetIcon from '../icons/refresh.svg';
+import DuplicateIcon from '../icons/copy.svg';
+import DeleteIcon from '../icons/trash.svg';
+import CopyIcon from '../icons/code.svg';
+import ResetIcon from '../icons/refresh.svg';
 
  export let id;
 
@@ -24,16 +24,16 @@ import resetIcon from '../icons/refresh.svg';
 </script>
 <div class="action-buttons-wrapper">
     <button  title="Copy component code" color="secondary" on:click={handleCopy}>
-				<img src={copyIcon} alt="Copy Code"/>
+				<CopyIcon />
 		</button>
     <button id="btn-duplicate"  title="Duplicate" color="secondary" on:click={handleDuplicate}>
-				<img src={duplicateIcon} alt="Duplicate Component"/>
+				<DuplicateIcon/>
 		</button>
     <button id="btn-reset-props"  title="Reset props" color="secondary" on:click={handleResetProps}>
-				<img src={resetIcon} alt="Reset Props"/>
+				<ResetIcon/>
 		</button>
     <button id="btn-delete" title="Delete" color="secondary" on:click={handleDelete}>
-				<img src={deleteIcon} alt="Delete Component"/>
+				<DeleteIcon/>
 		</button>
 </div>
 

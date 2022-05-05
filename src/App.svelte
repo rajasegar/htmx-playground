@@ -6,6 +6,7 @@ import EditorMenu from "./lib/EditorMenu.svelte";
  import ExportToCodeSandbox from "./lib/ExportToCodeSandbox.svelte"; 
  import ToggleBuilderMode from "./lib/ToggleBuilderMode.svelte";
  import ToggleCodePanel from "./lib/ToggleCodePanel.svelte";
+ import HtmxTemplates from "./lib/HtmxTemplates.svelte"; 
 
 </script>
 
@@ -13,6 +14,7 @@ import EditorMenu from "./lib/EditorMenu.svelte";
 		<h1 class="brand">HTMX <span>Playground</span></h1>
 		<div class="menu-wrapper">
 				<EditorMenu/>
+				<HtmxTemplates/>
 				<ToggleBuilderMode/>
 				<ToggleCodePanel/>
 				<ExportToCodeSandbox/>

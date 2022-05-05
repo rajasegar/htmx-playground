@@ -6,7 +6,10 @@
 
  const attrs = [
 		 {
-				 name: 'type'
+				 name: 'alt'
+		 },
+		 {
+				 name: 'src'
 		 },
  ];
 

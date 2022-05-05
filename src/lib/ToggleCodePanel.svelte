@@ -23,7 +23,7 @@
 </script>
 <div class="container">
 <label>
-<input type="checkbox" bind:checked={showCode} on:click={handleCheckbox}/> Code Panel 
+<input type="checkbox" bind:checked={showCode} on:click={handleCheckbox}/> Show Code 
 </label>
 </div> 
 <style>

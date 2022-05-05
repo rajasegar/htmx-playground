@@ -49,3 +49,7 @@ pre {
     cursor: col-resize;
 }
 
+
+	.dropbtn svg {
+			vertical-align: text-bottom;
+	}

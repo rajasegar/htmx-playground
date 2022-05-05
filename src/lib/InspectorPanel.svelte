@@ -1,47 +1,77 @@
 <script>
  import { editor } from '../stores.js';
- import DivPanel from '../panels/DivPanel.svelte';
  import ButtonPanel from '../panels/ButtonPanel.svelte';
  import RootPanel from '../panels/RootPanel.svelte';
- import LabelPanel from '../panels/LabelPanel.svelte';
- import SpanPanel from '../panels/SpanPanel.svelte';
+ import AnchorPanel from '../panels/AnchorPanel.svelte';
+ import DefaultPanel from '../panels/DefaultPanel.svelte';
+ import InputPanel from '../panels/InputPanel.svelte';
+ import ImgPanel from '../panels/ImgPanel.svelte';
+ import OptionPanel from '../panels/OptionPanel.svelte';
+
 
  export let id;
 
- let name;
- let panel;
- let props;
+ let component = $editor.components[$editor.selectedId];
+ let { type: name, props } = component;
+ let mainpanel; // Main panel which houses the respective element panels
+ let panel; // Respective element panels
+
+
+ function formatLabel(name, props) {
+		 return `${name}${props.id ? '#' + props.id : ''}${props.class ? '.' + props.class.split(' ').join('.') : ''}`
+ }
+ let label = formatLabel(name, props);
 
  editor.subscribe(value => {
 		 name = value.components[value.selectedId].type
 		 props = value.components[value.selectedId].props;
+     label = formatLabel(name, props);
+
+		 switch(name) {
+				 case 'root':
+						 mainpanel = RootPanel;
+						 break;
+
+				 default:
+						 mainpanel = DefaultPanel;
+						 
+		 }
 		 
 		 switch(name) {
-				 case 'div':
-						 panel = DivPanel;
-						 break;
 
 				 case 'button':
 						 panel = ButtonPanel;
 						 break;
 
-				 case 'label':
-						 panel = LabelPanel;
+				 case 'a':
+						 panel = AnchorPanel;
 						 break;
 
-				 case 'span':
-						 panel = SpanPanel;
+				 case 'input':
+						 panel = InputPanel;
+						 break;
+
+				 case 'img':
+						 panel = ImgPanel;
+						 break;
+						 
+				 case 'option':
+						 panel = OptionPanel;
 						 break;
 
 				 default:
-						 panel = RootPanel;
+						 panel = undefined;
 		 }
  })
 
 </script>
 <div class="inspector" id="inspector">
-<h3>{$editor.components[$editor.selectedId].type}</h3>
-<svelte:component this={panel} props={props} id={id} />
+		<!-- <h3>{$editor.components[$editor.selectedId].type}</h3> -->
+		<h3>{label}</h3>
+		
+<svelte:component this={mainpanel} props={props} id={id} >
+		<svelte:component this={panel} props={props} id={id}/>
+</svelte:component>
 </div>
 
 <style>

@@ -84,7 +84,11 @@ function generateDefaultCode(type, props, children) {
     const _children = generateChildrenFromOptions(type, props.options);
     code += `<${type} ${properties}>\r\n${_children}</${type}>\n`;
   } else {
-    code += `<${type} ${properties}></${type}>\n`;
+    if (type !== "input") {
+      code += `<${type} ${properties}></${type}>\n`;
+    } else {
+      code += `<${type} ${properties} />\n`;
+    }
   }
 
   return code;

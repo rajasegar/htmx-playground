@@ -8,6 +8,15 @@
 		 {
 				 name: 'type'
 		 },
+		 {
+				 name: 'value'
+		 },
+		 {
+				 name: 'name'
+		 },
+		 {
+				 name: 'placeholder'
+		 },
  ];
 
  function handleInput(prop, value) {

@@ -12,10 +12,11 @@ import PreviewContainer from './PreviewContainer.svelte';
 
  
  const htmlTags = [
-		 'div','p','span','a','button','form','label',
-		 'input','textarea','select','fieldset','header',
+		 'div','p','span','a','button','img','form','label',
+		 'input','textarea','select','option','fieldset','header',
 		 'footer','nav','article','aside','main','section',
-		 'ol','li','ul'
+		 'ol','li','ul', 'table','tbody','thead','th','tr','td',
+		 'h1','h2','h3','h4','h5','h6',
  ]
 
  let drop_zone;
@@ -135,7 +136,7 @@ function handleDragEnter(e) {}
 			>
 					{#each $editor.components['root'].children as comp}
 							{@const component = $editor.components[comp]}
-							<PreviewContainer id={component.id} name={component.type}/>
+							<PreviewContainer id={component.id} name={component.type} props={component.props} />
 							{/each}
 			</div>
 					<div id="code-panel">
@@ -193,6 +194,11 @@ function handleDragEnter(e) {}
 
 	 pre {
 			 padding: 0.25em;
+	 }
+
+	 .sidebar ul {
+			 overflow: auto;
+			 max-height: 90vh;
 	 }
 
 

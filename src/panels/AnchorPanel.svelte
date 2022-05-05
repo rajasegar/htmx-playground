@@ -6,7 +6,7 @@
 
  const attrs = [
 		 {
-				 name: 'type'
+				 name: 'href'
 		 },
  ];
 

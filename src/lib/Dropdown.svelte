@@ -1,24 +1,13 @@
 <script>
-
-import { loadFromJSON } from '../utils/import'
- import { editor } from '../stores.js';
  import Icon from '../icons/caret-down.svg';
-
- function handleExport() {
-      editor.exportJson()
- }
-
- async function handleImport() {
-     const _components = await loadFromJSON()
-		 editor.importFromJson(_components);
- }
+ export let trigger;
 </script>
 <div class="dropdown">
-  <button class="dropbtn">Editor <Icon /></button>
+		<button class="dropbtn">
+				{trigger} <Icon />
+		</button>
   <div class="dropdown-content">
-    <a role="button" id="btnExport" on:click={handleExport}>Export components</a>
-    <a role="button" id="btnImport" on:click={handleImport}>Import components</a>
-    <a href="https://htmx.org" target="_blank">HTMX Docs</a>
+			<slot></slot>
   </div>
 </div> 
  <style>
@@ -58,7 +47,4 @@ color: var(--sidebar-bg);
   display: block;
 }
 
-	.dropbtn svg {
-			vertical-align: text-bottom;
-	}
 </style>
