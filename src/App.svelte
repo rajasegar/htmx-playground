@@ -19,8 +19,10 @@ import EditorMenu from "./lib/EditorMenu.svelte";
 				<ToggleCodePanel/>
 				<ExportToCodeSandbox/>
 				<ClearEditor/>
-				<download-project></download-project>
 		</div>
+				<div class="github">
+						<a href="https://github.com/rajasegar/htmx-playground" target="_blank">Github</a>
+				</div>
 </header>
 <div class="container">
 		<Editor/>
@@ -66,5 +68,14 @@ import EditorMenu from "./lib/EditorMenu.svelte";
  .inspector { 
 	    flex: 0 0 15rem;
 	    }
+
+ a {
+		 color: white;
+		 text-decoration: none;
+ }
+
+ .github {
+		 margin-right: 1em;
+ }
 
 </style>
