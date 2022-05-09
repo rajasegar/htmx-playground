@@ -69,16 +69,16 @@
 </Dropdown>
 
 <style>
-a {
-  color: var(--elephant);
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  cursor: pointer;
-font-size: .75em;
-}
-a:hover {
-background-color: var(--smoke);
-color: var(--sidebar-bg);
-}
+ a {
+		 color: var(--elephant);
+		 padding: 12px 16px;
+		 text-decoration: none;
+		 display: block;
+		 cursor: pointer;
+		 font-size: .75em;
+ }
+ a:hover {
+		 background-color: var(--smoke);
+		 color: var(--sidebar-bg);
+ }
 </style>
