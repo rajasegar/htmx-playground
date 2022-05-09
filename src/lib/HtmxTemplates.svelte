@@ -56,7 +56,8 @@
  ]
 
  async function loadTemplate(path) {
-		 const templateUrl = new URL(path, import.meta.env.BASE_URL).href;
+		 const baseUrl = import.meta.env.PROD ? 'https://htmx-playground.vercel.app' : 'http://localhost:3000';
+		 const templateUrl = new URL(path, baseUrl).href;
 		 const template = await fetch(templateUrl).then(response => response.json());
 		 editor.importFromJson(template);
  }
