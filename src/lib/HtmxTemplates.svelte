@@ -6,58 +6,59 @@
 		 {
 				 name: 'Click To Edit',
 				 id: 1,
-				 path: '../templates/click-to-edit.json'
+				 path: '/templates/click-to-edit.json'
 		 },
 		 {
 				 name: 'Bulk Update',
 				 id: 2,
-				 path: '../templates/bulk-update.json'
+				 path: '/templates/bulk-update.json'
 		 },
 		 {
 				 name: 'Click To Load',
 				 id: 3,
-				 path: '../templates/click-to-load.json'
+				 path: '/templates/click-to-load.json'
 		 },
 		 {
 				 name: 'Delete Row',
 				 id: 4,
-				 path: '../templates/delete-row.json'
+				 path: '/templates/delete-row.json'
 		 },
 		 {
 				 name: 'Edit Row',
 				 id: 5,
-				 path: '../templates/edit-row.json'
+				 path: '/templates/edit-row.json'
 		 },
 		 {
 				 name: 'Lazy Loading',
 				 id: 6,
-				 path: '../templates/lazy-loading.json'
+				 path: '/templates/lazy-loading.json'
 		 },
 		 {
 				 name: 'Inline Validation',
 				 id: 7,
-				 path: '../templates/inline-validation.json'
+				 path: '/templates/inline-validation.json'
 		 },
 		 {
 				 name: 'Infinite Scroll',
 				 id: 8,
-				 path: '../templates/infinite-scroll.json'
+				 path: '/templates/infinite-scroll.json'
 		 },
 		 {
 				 name: 'Active Search',
 				 id: 9,
-				 path: '../templates/active-search.json'
+				 path: '/templates/active-search.json'
 		 },
 		 {
 				 name: 'Progress Bar',
 				 id: 10,
-				 path: '../templates/progress-bar.json'
+				 path: '/templates/progress-bar.json'
 		 },
  ]
 
  async function loadTemplate(path) {
-		 const template = await import(path);
-		 editor.importFromJson(template.default);
+		 const templateUrl = new URL(path, import.meta.url).href;
+		 const template = await fetch(templateUrl).then(response => response.json());
+		 editor.importFromJson(template);
  }
 </script>
 
