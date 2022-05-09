@@ -137,7 +137,7 @@ function handleDragEnter(e) {}
 			>
 					{#each $editor.components['root'].children as comp}
 							{@const component = $editor.components[comp]}
-							<PreviewContainer id={component.id} name={component.type} props={component.props} />
+							<PreviewContainer component={component}  />
 							{/each}
 			</div>
 					<div id="code-panel">

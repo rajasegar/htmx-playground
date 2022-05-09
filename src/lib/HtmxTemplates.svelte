@@ -41,7 +41,7 @@
 		 {
 				 name: 'Infinite Scroll',
 				 id: 8,
-				 path: '../templates/infinit-scroll.json'
+				 path: '../templates/infinite-scroll.json'
 		 },
 		 {
 				 name: 'Active Search',

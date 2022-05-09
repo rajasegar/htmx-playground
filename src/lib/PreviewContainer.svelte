@@ -2,21 +2,17 @@
  import { element } from 'svelte/internal';
 import { editor } from '../stores.js';
 
- export let id;
- export let name;
- export let props;
-
- let component;
+ export let component;
  let active;
 
  editor.subscribe(value => {
-		 component = value.components[id];
-		 active = id === value.selectedId;
+		 /* component = value.components[id]; */
+		 active = component.id === value.selectedId;
  })
 
  function selectComponent(ev) {
 		 ev.stopPropagation();
-		 editor.select(id)
+		 editor.select(component.id)
  }
 
  function handleDragEnter(e) {
@@ -37,8 +33,8 @@ import { editor } from '../stores.js';
 
 		 const payload = {}
 		 payload.type = element_id
-		 payload.parentName = id
-		 payload.rootParentType = name
+		 payload.parentName = component.id
+		 payload.rootParentType = component.name
 		 editor.add(payload);
  }
 
@@ -71,22 +67,22 @@ import { editor } from '../stores.js';
 					 on:mouseleave={handleMouseLeave}
 
 >
-		<div class="annotation">{name}</div>
+		<div class="annotation">{component.type}</div>
 
 		{#if component.children.length > 0}
-				<svelte:element this={component.type} {...props}>
+				<svelte:element this={component.type} {...component.props}>
 				{#each component.children as child}
 						{@const childComponent = $editor.components[child]}
-								<svelte:self id={child} name={childComponent.type} {...props}/>
+								<svelte:self component={childComponent}  />
 				{/each}
 				</svelte:element>
 		{:else}
 				{#if component.props.children}
-				<svelte:element this={component.type} {...props}>
+				<svelte:element this={component.type} {...component.props}>
 						{component.props.children}
 				</svelte:element>
 				{:else}
-				<svelte:element this={component.type} {...props} />
+				<svelte:element this={component.type} {...component.props} />
 				{/if}
 		{/if}
 
@@ -110,12 +106,21 @@ import { editor } from '../stores.js';
 
  .annotation {
 		 position: absolute;
-		 background: var(--elephant);
-		 color: white;
+		 color: var(--elephant);
 		 padding: 0.25em 0.5em;
 		 font-size: .7em;
 		 right: 0;
 		 top:0;
 		 border-bottom-left-radius: 4px;
+		 border: 1px dashed var(--elephant);
+		 border-top: none;
+		 border-right: none;
+		 
+ }
+
+ .active .annotation {
+		 
+		 background: var(--elephant);
+		 color: white;
  }
 </style>

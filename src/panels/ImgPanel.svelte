@@ -11,6 +11,12 @@
 		 {
 				 name: 'src'
 		 },
+		 {
+				 name: 'height'
+		 },
+		 {
+				 name: 'width'
+		 },
  ];
 
  function handleInput(prop, value) {
