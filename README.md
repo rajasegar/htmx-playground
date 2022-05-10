@@ -2,7 +2,7 @@
 
 An advanced Drag-n-Drop editor for building HTML with support for [HTMX](https://htmx.org) attributes.
 
-https://www.youtube.com/watch?v=s3O4xLW7qgA
+![Demo](https://www.youtube.com/watch?v=s3O4xLW7qgA)
 
 ## Features
 - Drag and drop HTML tags

@@ -123,6 +123,14 @@ function createEditor() {
         saveAsJSON(state);
         return state;
       }),
+
+    updateChildren: (payload) =>
+      update((state) => {
+        return produce(state, (draftState) => {
+          draftState.components[draftState.selectedId].children =
+            payload.children;
+        });
+      }),
   };
 }
 
